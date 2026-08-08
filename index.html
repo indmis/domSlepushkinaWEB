@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="ru">
 <head>
@@ -15,109 +16,229 @@
       --ctrl:#111; --ctrl-hover:#1a1a1a;
       --gap:12px; --pad:16px; --radius:12px;
     }
+
     *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg);
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--fg);
       font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
     header{
-      position:sticky; top:0; z-index:5;
-      backdrop-filter: saturate(140%) blur(6px);
+      position:sticky;
+      top:0;
+      z-index:5;
+      backdrop-filter:saturate(140%) blur(6px);
       background:rgba(0,0,0,.88);
       border-bottom:1px solid #111;
     }
+
     .bar{
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
-      max-width:960px; margin:0 auto; padding:10px var(--pad);
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      max-width:960px;
+      margin:0 auto;
+      padding:10px var(--pad);
     }
-    .brand{ font-weight:700; }
+
+    .brand{
+      font-weight:700;
+    }
 
     .status-badge{
-      font-size:13px; color:#000; background:#fff; border-radius:999px;
-      padding:6px 10px; min-width:120px; text-align:center;
-      box-shadow: 0 0 0 rgba(255,255,255,0);
-      transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+      font-size:13px;
+      color:#000;
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      min-width:120px;
+      text-align:center;
+      box-shadow:0 0 0 rgba(255,255,255,0);
+      transition:background-color .2s ease, color .2s ease, box-shadow .2s ease;
     }
+
     .status-badge.loading{
       background:#ffd64d;
-      /* мягкая световая пульсация */
-      animation: pulseGlow 1.6s ease-in-out infinite;
+      animation:pulseGlow 1.6s ease-in-out infinite;
     }
-    .status-badge.ready{ background:#9cff7a; }
-    .status-badge.busy{ background:#7abaff; }
-    .status-badge.error{ background:#ff9c9c; }
+
+    .status-badge.ready{
+      background:#9cff7a;
+    }
+
+    .status-badge.busy{
+      background:#7abaff;
+    }
+
+    .status-badge.error{
+      background:#ff9c9c;
+    }
 
     @keyframes pulseGlow{
-      0%   { box-shadow: 0 0 0 rgba(255,214,77,0); }
-      50%  { box-shadow: 0 0 22px rgba(255,214,77,.8); }
-      100% { box-shadow: 0 0 0 rgba(255,214,77,0); }
+      0%{
+        box-shadow:0 0 0 rgba(255,214,77,0);
+      }
+      50%{
+        box-shadow:0 0 22px rgba(255,214,77,.8);
+      }
+      100%{
+        box-shadow:0 0 0 rgba(255,214,77,0);
+      }
     }
 
-    .wrap{ max-width:960px; margin:0 auto; padding:var(--pad); }
-    .hint{ color:var(--muted); font-size:14px; }
+    .wrap{
+      max-width:960px;
+      margin:0 auto;
+      padding:var(--pad);
+    }
+
+    .hint{
+      color:var(--muted);
+      font-size:14px;
+    }
 
     /* ГРУППЫ: Низы / Середины / Верхи */
-    .groups{ display:grid; gap:16px; }
-    @media (min-width: 860px){
-      .groups{ grid-template-columns: 1fr 1fr 1fr; }
+    .groups{
+      display:grid;
+      gap:16px;
     }
+
+    @media (min-width:860px){
+      .groups{
+        grid-template-columns:1fr 1fr 1fr;
+      }
+    }
+
     .group{
-      background:#0a0a0a; border:1px solid #161616; border-radius:14px; padding:12px;
+      background:#0a0a0a;
+      border:1px solid #161616;
+      border-radius:14px;
+      padding:12px;
     }
+
     .group h3{
-      margin:0 0 8px; font-size:14px; font-weight:700; letter-spacing:.02em; color:#dcdcdc;
+      margin:0 0 8px;
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.02em;
+      color:#dcdcdc;
     }
+
     .grid3{
-      display:grid; gap:var(--gap);
-      grid-template-columns: repeat(3, minmax(0,1fr));
+      display:grid;
+      gap:var(--gap);
+      grid-template-columns:repeat(3,minmax(0,1fr));
     }
 
     /* Плитки-пэды */
-    .pad, .ctrl{
-      background:var(--tile); color:var(--fg);
-      cursor:pointer; user-select:none;
-      display:grid; place-items:center; text-align:center;
-      border:none; border-radius:var(--radius);
-      transition: transform .07s ease, opacity .2s ease, background-color .2s ease;
+    .pad,.ctrl{
+      background:var(--tile);
+      color:var(--fg);
+      cursor:pointer;
+      user-select:none;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      border:none;
+      border-radius:var(--radius);
+      transition:transform .07s ease, opacity .2s ease, background-color .2s ease;
     }
+
     .pad{
-      aspect-ratio:1/1; font-weight:700; font-size:22px;
+      aspect-ratio:1/1;
+      font-weight:700;
+      font-size:22px;
     }
-    .pad:active{ transform:scale(.98); }
-    .pad.active{ background:var(--tile-active); }
+
+    .pad:active{
+      transform:scale(.98);
+    }
+
+    .pad.active{
+      background:var(--tile-active);
+    }
 
     /* Кнопки управления */
     .controls{
-      display:grid; gap:var(--gap); margin-top:16px;
-      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      display:grid;
+      gap:var(--gap);
+      margin-top:16px;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
     }
-    .ctrl{ padding:12px 14px; background:var(--ctrl); font-weight:700; }
-    .ctrl:hover{ background:var(--ctrl-hover); }
-    .ctrl:active{ transform:scale(.98); }
 
-    .err{ color:#ff6b6b; font-size:14px; margin-top:10px; white-space:pre-wrap; }
+    .ctrl{
+      padding:12px 14px;
+      background:var(--ctrl);
+      font-weight:700;
+    }
+
+    .ctrl:hover{
+      background:var(--ctrl-hover);
+    }
+
+    .ctrl:active{
+      transform:scale(.98);
+    }
+
+    .err{
+      color:#ff6b6b;
+      font-size:14px;
+      margin-top:10px;
+      white-space:pre-wrap;
+    }
 
     /* Оверлей разблокировки звука */
     .overlay{
-      position:fixed; inset:0; z-index:10;
-      background:#000; color:var(--fg);
-      display:flex; align-items:center; justify-content:center;
-      padding:24px; text-align:center;
+      position:fixed;
+      inset:0;
+      z-index:10;
+      background:#000;
+      color:var(--fg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      text-align:center;
       border:3px dashed #222;
     }
+
     .overlay button{
-      border:none; background:#fff; color:#000; padding:12px 18px;
-      font-weight:800; cursor:pointer; border-radius:12px;
+      border:none;
+      background:#fff;
+      color:#000;
+      padding:12px 18px;
+      font-weight:800;
+      cursor:pointer;
+      border-radius:12px;
     }
-    .overlay .hint{ color:#bbb; margin-top:8px; }
+
+    .overlay button:disabled{
+      opacity:.5;
+      cursor:wait;
+    }
+
+    .overlay .hint{
+      color:#bbb;
+      margin-top:8px;
+    }
 
     /* доступность */
-    .pad:focus-visible, .ctrl:focus-visible, .overlay button:focus-visible{
-      outline:2px solid #888; outline-offset:2px;
+    .pad:focus-visible,
+    .ctrl:focus-visible,
+    .overlay button:focus-visible{
+      outline:2px solid #888;
+      outline-offset:2px;
     }
   </style>
 </head>
+
 <body>
+
   <header>
     <div class="bar">
       <div class="brand">Веб-копия инсталляции</div>
@@ -126,12 +247,17 @@
   </header>
 
   <div class="wrap">
-    <p class="hint" style="margin-top:0">Сначала нажмите «Включить звук», затем кнопки. На iPhone выключите режим без звука.</p>
+
+    <p class="hint" style="margin-top:0">
+      Сначала нажмите «Включить звук», затем кнопки.
+      На iPhone выключите режим без звука.
+    </p>
 
     <div id="error" class="err" hidden></div>
 
     <!-- Явные группы высот -->
     <section class="groups">
+
       <div class="group" aria-label="Низы">
         <h3>Низы</h3>
         <div class="grid3">
@@ -158,6 +284,7 @@
           <button class="pad" data-idx="8">8</button>
         </div>
       </div>
+
     </section>
 
     <div class="controls">
@@ -165,295 +292,971 @@
       <button id="btn-random" class="ctrl">Случайные 3</button>
       <button id="btn-reset" class="ctrl">Сброс</button>
     </div>
+
   </div>
 
   <!-- Оверлей разблокировки звука -->
   <div class="overlay" id="gate">
     <div>
-      <p style="margin-top:0">Браузеры блокируют звук до жеста пользователя.</p>
+      <p style="margin-top:0">
+        Браузеры блокируют звук до жеста пользователя.
+      </p>
+
       <button id="unlock">Включить звук</button>
-      <div class="hint">на iPhone снимите беззвучный режим</div>
+
+      <div class="hint">
+        на iPhone снимите беззвучный режим
+      </div>
     </div>
   </div>
 
+
 <script>
 (()=>{
+
   const E  = (sel, root=document) => root.querySelector(sel);
   const EA = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
   const status = E('#status');
   const errBox = E('#error');
   const gate   = E('#gate');
   const btnUnlock = E('#unlock');
 
   const files = [
-    'sounds/00.mp3','sounds/01.mp3','sounds/02.mp3',
-    'sounds/03.mp3','sounds/04.mp3','sounds/05.mp3',
-    'sounds/06.mp3','sounds/07.mp3','sounds/08.mp3'
+    'sounds/00.mp3',
+    'sounds/01.mp3',
+    'sounds/02.mp3',
+    'sounds/03.mp3',
+    'sounds/04.mp3',
+    'sounds/05.mp3',
+    'sounds/06.mp3',
+    'sounds/07.mp3',
+    'sounds/08.mp3'
   ];
-  const satellites = { low:'sounds/down.mp3', mid:'sounds/middle.mp3', high:'sounds/up.mp3' };
+
+  const satellites = {
+    low:'sounds/down.mp3',
+    mid:'sounds/middle.mp3',
+    high:'sounds/up.mp3'
+  };
+
   const prelude = 'sounds/all.mp3';
 
-  const groupOf = i => (i<=2?'low': i<=5?'mid':'high');
+  const groupOf = i => (
+    i <= 2 ? 'low' :
+    i <= 5 ? 'mid' :
+    'high'
+  );
+
   const groups = ['low','mid','high'];
+
   const MAX_ACTIVE = 3;
-  const SATELLITE_DELAY_MS = 4000; // 4 секунды, как на железе
-  const FADE_MS = 1200;            // плавные фейды
+
+  const SATELLITE_DELAY_MS = 4000;
+  const FADE_MS = 1200;
   const SAT_FADE_MS = 1200;
 
-  let ctx, master;
-  let gains = [];          // 9 GainNode для основных лупов
-  let buffers = [];        // 9 AudioBuffer
-  let loopNodes = [];      // 9 BufferSource (всегда играют в фоне)
+
+  // =========================================================
+  // СОСТОЯНИЕ АУДИО
+  // =========================================================
+
+  let ctx = null;
+  let master = null;
+
+  // ВАЖНО:
+  // initializing защищает от повторного клика во время загрузки.
+  let initializing = false;
+  let initialized = false;
+
+
+  let gains = [];
+  let buffers = [];
+  let loopNodes = [];
+
 
   // состояние плиток
   let active = new Set();
   let lru = [];
-  let groupQueues = {low:[], mid:[], high:[]};
+  let groupQueues = {
+    low:[],
+    mid:[],
+    high:[]
+  };
+
 
   // сателлиты
   let satBuffers = {};
-  let satGains   = {};
-  let satNodes   = {};
-  let satLast3At = {low:0, mid:0, high:0};
+  let satGains = {};
+  let satNodes = {};
+
+  let satLast3At = {
+    low:0,
+    mid:0,
+    high:0
+  };
+
 
   // вдох
   let preludeBuf = null;
   let preludePlaying = false;
   let preludeSoftLockUntil = 0;
 
+
+  // =========================================================
+  // STATUS / ERROR
+  // =========================================================
+
   function setStatus(text, cls='ready'){
     status.textContent = text;
     status.className = 'status-badge ' + cls;
   }
+
+
   function showErr(msg){
     errBox.hidden = false;
     errBox.textContent = msg;
+
     setStatus('Ошибка','error');
+
     console.error(msg);
   }
 
-  // ===== инициализация аудио по жесту =====
+
+  // =========================================================
+  // ИНИЦИАЛИЗАЦИЯ АУДИО
+  // =========================================================
+
   btnUnlock.addEventListener('click', async ()=>{
-    try{
-      if (!ctx){
-        ctx = new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});
-        master = ctx.createGain(); master.gain.value = 0.95; master.connect(ctx.destination);
 
-        for (let i=0;i<9;i++){
-          const g = ctx.createGain(); g.gain.value = 0.0; g.connect(master); gains[i] = g;
-        }
-        for (const k of groups){
-          const g = ctx.createGain(); g.gain.value = 0.0; g.connect(master); satGains[k] = g;
-        }
-
-        setStatus('Загружаю…','loading');
-        await loadAllAudio();
-        startAllLoops(); // 9 лупов крутятся тихо
-        setStatus('Готово. Нажимайте кнопки.','ready');
-
-        // периодический тик, чтобы сателлиты включались даже без новых кликов
-        setInterval(checkSatellites, 200);
-      }
-      await ctx.resume();
-      gate.remove();
-    }catch(e){
-      showErr('Не удалось инициализировать звук: '+e.message);
+    // Если уже загружается или уже готово —
+    // ничего больше не делаем.
+    if(initializing || initialized){
+      return;
     }
+
+    initializing = true;
+
+    // Сразу блокируем кнопку.
+    btnUnlock.disabled = true;
+    btnUnlock.textContent = 'Загрузка…';
+
+    try{
+
+      setStatus('Запускаю звук…','loading');
+
+
+      // -------------------------------------------------------
+      // Создаём AudioContext
+      // -------------------------------------------------------
+
+      ctx = new (window.AudioContext || window.webkitAudioContext)({
+        latencyHint:'interactive'
+      });
+
+
+      // ВАЖНО:
+      // resume вызывается непосредственно внутри пользовательского
+      // click, чтобы браузер точно разрешил аудио.
+      await ctx.resume();
+
+
+      // -------------------------------------------------------
+      // Master
+      // -------------------------------------------------------
+
+      master = ctx.createGain();
+
+      master.gain.value = 0.95;
+
+      master.connect(ctx.destination);
+
+
+      // -------------------------------------------------------
+      // 9 основных GainNode
+      // -------------------------------------------------------
+
+      for(let i=0; i<9; i++){
+
+        const g = ctx.createGain();
+
+        g.gain.value = 0.0;
+
+        g.connect(master);
+
+        gains[i] = g;
+      }
+
+
+      // -------------------------------------------------------
+      // GainNode сателлитов
+      // -------------------------------------------------------
+
+      for(const k of groups){
+
+        const g = ctx.createGain();
+
+        g.gain.value = 0.0;
+
+        g.connect(master);
+
+        satGains[k] = g;
+      }
+
+
+      // -------------------------------------------------------
+      // Загружаем ВСЁ аудио
+      // -------------------------------------------------------
+
+      setStatus('Загружаю звук…','loading');
+
+      await loadAllAudio();
+
+
+      // -------------------------------------------------------
+      // Запускаем 9 фоновых лупов
+      // -------------------------------------------------------
+
+      startAllLoops();
+
+
+      // -------------------------------------------------------
+      // Всё готово
+      // -------------------------------------------------------
+
+      initialized = true;
+      initializing = false;
+
+      setStatus(
+        'Готово. Нажимайте кнопки.',
+        'ready'
+      );
+
+
+      // Убираем экран блокировки.
+      gate.remove();
+
+
+      // Периодическая проверка сателлитов.
+      setInterval(checkSatellites, 200);
+
+
+    }catch(e){
+
+      console.error(e);
+
+      initializing = false;
+
+      btnUnlock.disabled = false;
+      btnUnlock.textContent = 'Включить звук';
+
+      showErr(
+        'Не удалось инициализировать звук: ' +
+        e.message
+      );
+
+    }
+
   });
 
+
+  // =========================================================
+  // ЗАГРУЗКА АУДИО
+  // =========================================================
+
   async function fetchBuf(url){
-    const r = await fetch(url,{cache:'no-cache'});
-    if (!r.ok) throw new Error(url+' → '+r.status+' '+r.statusText);
+
+    const r = await fetch(
+      url,
+      {cache:'no-cache'}
+    );
+
+    if(!r.ok){
+
+      throw new Error(
+        url +
+        ' → ' +
+        r.status +
+        ' ' +
+        r.statusText
+      );
+
+    }
+
     return await r.arrayBuffer();
   }
+
+
   async function decode(url){
-    return await ctx.decodeAudioData(await fetchBuf(url));
+
+    return await ctx.decodeAudioData(
+      await fetchBuf(url)
+    );
+
   }
+
+
   async function loadAllAudio(){
+
     try{
-      buffers = await Promise.all(files.map(decode));
-      for (const [k, url] of Object.entries(satellites)){
+
+      // 9 основных файлов
+      buffers = await Promise.all(
+        files.map(decode)
+      );
+
+
+      // 3 сателлита
+      for(const [k,url] of Object.entries(satellites)){
+
         satBuffers[k] = await decode(url);
+
       }
+
+
+      // all.mp3
       preludeBuf = await decode(prelude);
+
+
     }catch(e){
-      showErr('Ошибка загрузки аудио. Проверьте пути/имена файлов.\n'+e.message);
+
+      showErr(
+        'Ошибка загрузки аудио. ' +
+        'Проверьте пути/имена файлов.\n' +
+        e.message
+      );
+
       throw e;
     }
+
   }
+
+
+  // =========================================================
+  // ЗАПУСК ОСНОВНЫХ ЛУПОВ
+  // =========================================================
 
   function startAllLoops(){
-    for (let i=0;i<9;i++){
+
+    for(let i=0; i<9; i++){
+
       const src = ctx.createBufferSource();
+
       src.buffer = buffers[i];
+
       src.loop = true;
+
       src.connect(gains[i]);
+
       src.start(0);
+
       loopNodes[i] = src;
     }
+
   }
 
+
+  // =========================================================
+  // САТЕЛЛИТ
+  // =========================================================
+
   function ensureSatRunning(g){
-    if (satNodes[g]) return;
+
+    if(satNodes[g]){
+      return;
+    }
+
+
     const src = ctx.createBufferSource();
+
     src.buffer = satBuffers[g];
+
     src.loop = true;
+
     src.connect(satGains[g]);
+
     src.start(0);
+
     satNodes[g] = src;
   }
 
-  function fadeTo(param, to, ms=FADE_MS){
+
+  // =========================================================
+  // FADE
+  // =========================================================
+
+  function fadeTo(
+    param,
+    to,
+    ms=FADE_MS
+  ){
+
     const now = ctx.currentTime;
+
     param.cancelScheduledValues(now);
-    param.setValueAtTime(param.value, now);
-    param.linearRampToValueAtTime(to, now + ms/1000);
+
+    param.setValueAtTime(
+      param.value,
+      now
+    );
+
+    param.linearRampToValueAtTime(
+      to,
+      now + ms / 1000
+    );
   }
+
+
+  // =========================================================
+  // LRU
+  // =========================================================
 
   function pushLRU(idx){
-    lru = lru.filter(i=>i!==idx);
+
+    lru = lru.filter(
+      i => i !== idx
+    );
+
     lru.push(idx);
+
+
     const g = groupOf(idx);
-    groupQueues[g] = groupQueues[g].filter(i=>i!==idx);
+
+    groupQueues[g] =
+      groupQueues[g].filter(
+        i => i !== idx
+      );
+
     groupQueues[g].push(idx);
   }
+
+
   function popOldestGlobal(){
-    if (!lru.length) return null;
+
+    if(!lru.length){
+      return null;
+    }
+
     const v = lru.shift();
+
     deactivate(v);
+
     return v;
   }
+
+
   function popOldestFromGroup(g){
-    if (!groupQueues[g].length) return null;
+
+    if(!groupQueues[g].length){
+      return null;
+    }
+
     const v = groupQueues[g].shift();
+
     deactivate(v);
+
     return v;
   }
+
+
+  // =========================================================
+  // DEACTIVATE
+  // =========================================================
 
   function deactivate(idx){
-    if (!active.has(idx)) return;
+
+    if(!active.has(idx)){
+      return;
+    }
+
     active.delete(idx);
-    lru = lru.filter(i=>i!==idx);
+
+    lru =
+      lru.filter(
+        i => i !== idx
+      );
+
+
     const g = groupOf(idx);
-    groupQueues[g] = groupQueues[g].filter(i=>i!==idx);
-    fadeTo(gains[idx].gain, 0.0, FADE_MS);
-    E(`.pad[data-idx="${idx}"]`)?.classList.remove('active');
+
+    groupQueues[g] =
+      groupQueues[g].filter(
+        i => i !== idx
+      );
+
+
+    fadeTo(
+      gains[idx].gain,
+      0.0,
+      FADE_MS
+    );
+
+
+    E(
+      `.pad[data-idx="${idx}"]`
+    )?.classList.remove('active');
+
   }
+
+
+  // =========================================================
+  // ГРУППЫ
+  // =========================================================
 
   function activeInGroup(g){
-    return [...active].filter(i=>groupOf(i)===g);
+
+    return [...active].filter(
+      i => groupOf(i) === g
+    );
+
   }
+
 
   function balanceBeforeOn(idx){
+
     const gNew = groupOf(idx);
-    const counts = { low:activeInGroup('low').length, mid:activeInGroup('mid').length, high:activeInGroup('high').length };
-    const total = counts.low + counts.mid + counts.high;
 
-    if (total >= MAX_ACTIVE) popOldestGlobal();
 
-    const c = { low:activeInGroup('low').length, mid:activeInGroup('mid').length, high:activeInGroup('high').length };
-    for (const g of groups){
-      if (c[g] >= 3 && g !== gNew){ popOldestFromGroup(g); return; }
+    const counts = {
+      low:activeInGroup('low').length,
+      mid:activeInGroup('mid').length,
+      high:activeInGroup('high').length
+    };
+
+
+    const total =
+      counts.low +
+      counts.mid +
+      counts.high;
+
+
+    if(total >= MAX_ACTIVE){
+
+      popOldestGlobal();
+
     }
-    if ([c.low,c.mid,c.high].sort().join(',')==='0,1,2' && c[gNew]===0){
-      const donor = groups.find(g=>c[g]===2);
-      if (donor){ popOldestFromGroup(donor); return; }
+
+
+    const c = {
+      low:activeInGroup('low').length,
+      mid:activeInGroup('mid').length,
+      high:activeInGroup('high').length
+    };
+
+
+    for(const g of groups){
+
+      if(
+        c[g] >= 3 &&
+        g !== gNew
+      ){
+
+        popOldestFromGroup(g);
+
+        return;
+      }
+
     }
-    if (groups.every(g=>c[g]>0) && c[gNew]>0){ popOldestFromGroup(gNew); return; }
+
+
+    if(
+      [c.low,c.mid,c.high]
+        .sort()
+        .join(',') === '0,1,2' &&
+      c[gNew] === 0
+    ){
+
+      const donor =
+        groups.find(
+          g => c[g] === 2
+        );
+
+      if(donor){
+
+        popOldestFromGroup(donor);
+
+        return;
+      }
+
+    }
+
+
+    if(
+      groups.every(
+        g => c[g] > 0
+      ) &&
+      c[gNew] > 0
+    ){
+
+      popOldestFromGroup(gNew);
+
+      return;
+    }
+
   }
+
+
+  // =========================================================
+  // PAD
+  // =========================================================
 
   function togglePad(idx, el){
-    if (!ctx || ctx.state!=='running') return;
-    if (preludePlaying && Date.now()<preludeSoftLockUntil) return;
 
-    if (active.has(idx)){
+    if(
+      !ctx ||
+      ctx.state !== 'running'
+    ){
+
+      return;
+    }
+
+
+    if(
+      preludePlaying &&
+      Date.now() < preludeSoftLockUntil
+    ){
+
+      return;
+    }
+
+
+    if(active.has(idx)){
+
       deactivate(idx);
-    } else {
+
+    }else{
+
       balanceBeforeOn(idx);
-      active.add(idx); pushLRU(idx);
-      fadeTo(gains[idx].gain, 1.0, FADE_MS);
+
+      active.add(idx);
+
+      pushLRU(idx);
+
+      fadeTo(
+        gains[idx].gain,
+        1.0,
+        FADE_MS
+      );
+
       el.classList.add('active');
     }
+
+
     checkSatellites();
   }
+
+
+  // =========================================================
+  // RANDOM 3
+  // =========================================================
 
   function random3(){
-    const arr=[...Array(9).keys()].sort(()=>Math.random()-0.5).slice(0,3);
+
+    if(
+      !ctx ||
+      ctx.state !== 'running'
+    ){
+
+      return;
+    }
+
+
+    const arr =
+      [...Array(9).keys()]
+        .sort(
+          () => Math.random() - 0.5
+        )
+        .slice(0,3);
+
+
     arr.forEach(i=>{
-      const el = E(`.pad[data-idx="${i}"]`);
+
+      const el =
+        E(
+          `.pad[data-idx="${i}"]`
+        );
+
+
       balanceBeforeOn(i);
-      active.add(i); pushLRU(i);
-      fadeTo(gains[i].gain, 1.0, FADE_MS);
+
+      active.add(i);
+
+      pushLRU(i);
+
+      fadeTo(
+        gains[i].gain,
+        1.0,
+        FADE_MS
+      );
+
       el?.classList.add('active');
+
     });
+
+
     checkSatellites();
   }
 
+
+  // =========================================================
+  // RESET
+  // =========================================================
+
   function resetAll(){
-    [...active].forEach(deactivate);
+
+    if(
+      !ctx ||
+      ctx.state !== 'running'
+    ){
+
+      return;
+    }
+
+
+    [...active].forEach(
+      deactivate
+    );
+
+
     // гасим сателлиты
-    for (const g of groups){
-      fadeTo(satGains[g].gain, 0.0, SAT_FADE_MS);
+    for(const g of groups){
+
+      fadeTo(
+        satGains[g].gain,
+        0.0,
+        SAT_FADE_MS
+      );
+
       satLast3At[g] = 0;
     }
+
   }
 
-  // ===== сателлиты =====
+
+  // =========================================================
+  // САТЕЛЛИТЫ
+  // =========================================================
+
   function checkSatellites(){
-    const now = performance.now();
-    for (const g of groups){
-      const n = activeInGroup(g).length;
-      if (n >= 3){
-        if (satLast3At[g] === 0) satLast3At[g] = now;
-        if (now - satLast3At[g] >= SATELLITE_DELAY_MS){
-          ensureSatRunning(g);
-          fadeTo(satGains[g].gain, 0.8, SAT_FADE_MS);
-        }
-      } else {
-        satLast3At[g] = 0;
-        fadeTo(satGains[g].gain, 0.0, SAT_FADE_MS);
-      }
+
+    if(
+      !ctx ||
+      ctx.state !== 'running'
+    ){
+
+      return;
     }
+
+
+    const now =
+      performance.now();
+
+
+    for(const g of groups){
+
+      const n =
+        activeInGroup(g).length;
+
+
+      if(n >= 3){
+
+        if(
+          satLast3At[g] === 0
+        ){
+
+          satLast3At[g] = now;
+        }
+
+
+        if(
+          now - satLast3At[g] >=
+          SATELLITE_DELAY_MS
+        ){
+
+          ensureSatRunning(g);
+
+          fadeTo(
+            satGains[g].gain,
+            0.8,
+            SAT_FADE_MS
+          );
+
+        }
+
+      }else{
+
+        satLast3At[g] = 0;
+
+        fadeTo(
+          satGains[g].gain,
+          0.0,
+          SAT_FADE_MS
+        );
+
+      }
+
+    }
+
   }
 
-  // ===== вдох (all) =====
+
+  // =========================================================
+  // ВДОХ
+  // =========================================================
+
   async function inhale(){
-    if (!ctx || ctx.state!=='running') return;
-    if (preludePlaying) return;
+
+    if(
+      !ctx ||
+      ctx.state !== 'running'
+    ){
+
+      return;
+    }
+
+
+    if(preludePlaying){
+      return;
+    }
+
+
     preludePlaying = true;
-    preludeSoftLockUntil = Date.now() + 10000;
 
-    setStatus('Вдох…','busy');
+    preludeSoftLockUntil =
+      Date.now() + 10000;
+
+
+    setStatus(
+      'Вдох…',
+      'busy'
+    );
+
+
     resetAll();
-    await new Promise(r=>setTimeout(r,300));
 
-    const src = ctx.createBufferSource();
+
+    await new Promise(
+      r => setTimeout(r,300)
+    );
+
+
+    const src =
+      ctx.createBufferSource();
+
+
     src.buffer = preludeBuf;
-    const g = ctx.createGain(); g.gain.value = 0.0;
-    src.connect(g); g.connect(master); src.start(0);
 
-    const t0 = ctx.currentTime;
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(1.0, t0 + 0.08);
-    const tEnd = t0 + preludeBuf.duration;
-    g.gain.setValueAtTime(1.0, tEnd - 0.2);
-    g.gain.linearRampToValueAtTime(0.0, tEnd);
 
-    src.onended = () => {
+    const g =
+      ctx.createGain();
+
+
+    g.gain.value = 0.0;
+
+
+    src.connect(g);
+
+    g.connect(master);
+
+    src.start(0);
+
+
+    const t0 =
+      ctx.currentTime;
+
+
+    g.gain.setValueAtTime(
+      0,
+      t0
+    );
+
+
+    g.gain.linearRampToValueAtTime(
+      1.0,
+      t0 + 0.08
+    );
+
+
+    const tEnd =
+      t0 + preludeBuf.duration;
+
+
+    g.gain.setValueAtTime(
+      1.0,
+      tEnd - 0.2
+    );
+
+
+    g.gain.linearRampToValueAtTime(
+      0.0,
+      tEnd
+    );
+
+
+    src.onended = ()=>{
+
       preludePlaying = false;
-      setStatus('Готово','ready');
+
+      setStatus(
+        'Готово',
+        'ready'
+      );
+
     };
+
   }
 
-  // wire UI
-  EA('.pad').forEach(el=> el.addEventListener('click', ()=>togglePad(+el.dataset.idx, el)));
-  E('#btn-random').addEventListener('click', random3);
-  E('#btn-reset').addEventListener('click', resetAll);
-  E('#btn-inhale').addEventListener('click', inhale);
 
-  // начальный статус
-  setStatus('Ожидание…','loading');
+  // =========================================================
+  // UI
+  // =========================================================
+
+  EA('.pad').forEach(
+    el =>
+      el.addEventListener(
+        'click',
+        () =>
+          togglePad(
+            +el.dataset.idx,
+            el
+          )
+      )
+  );
+
+
+  E('#btn-random')
+    .addEventListener(
+      'click',
+      random3
+    );
+
+
+  E('#btn-reset')
+    .addEventListener(
+      'click',
+      resetAll
+    );
+
+
+  E('#btn-inhale')
+    .addEventListener(
+      'click',
+      inhale
+    );
+
+
+  // =========================================================
+  // НАЧАЛЬНЫЙ СТАТУС
+  // =========================================================
+
+  setStatus(
+    'Ожидание…',
+    'loading'
+  );
+
 })();
 </script>
+
 </body>
 </html>
+```
