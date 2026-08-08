@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Installation — web copy</title>
 
-  <!-- простая favicon, чтобы не ловить 404 -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='18' fill='%23fff'/%3E%3C/svg%3E">
 
   <style>
@@ -101,7 +100,6 @@
       font-size:14px;
     }
 
-    /* ГРУППЫ: Низы / Середины / Верхи */
     .groups{
       display:grid;
       gap:16px;
@@ -134,7 +132,6 @@
       grid-template-columns:repeat(3,minmax(0,1fr));
     }
 
-    /* Плитки-пэды */
     .pad,.ctrl{
       background:var(--tile);
       color:var(--fg);
@@ -162,7 +159,6 @@
       background:var(--tile-active);
     }
 
-    /* Кнопки управления */
     .controls{
       display:grid;
       gap:var(--gap);
@@ -191,7 +187,6 @@
       white-space:pre-wrap;
     }
 
-    /* Оверлей разблокировки звука */
     .overlay{
       position:fixed;
       inset:0;
@@ -226,12 +221,31 @@
       margin-top:8px;
     }
 
-    /* доступность */
     .pad:focus-visible,
     .ctrl:focus-visible,
     .overlay button:focus-visible{
       outline:2px solid #888;
       outline-offset:2px;
+    }
+
+    /* Ссылка на Telegram */
+    .footer{
+      text-align:center;
+      padding:40px 16px 24px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .footer a{
+      color:var(--fg);
+      text-decoration:none;
+      border-bottom:1px solid #555;
+      transition:opacity .2s ease, border-color .2s ease;
+    }
+
+    .footer a:hover{
+      opacity:.7;
+      border-color:#fff;
     }
   </style>
 </head>
@@ -254,7 +268,6 @@
 
     <div id="error" class="err" hidden></div>
 
-    <!-- Явные группы высот -->
     <section class="groups">
 
       <div class="group" aria-label="Низы">
@@ -294,6 +307,13 @@
 
   </div>
 
+  <!-- Ссылка на автора -->
+  <footer class="footer">
+    <a href="https://t.me/indmiart" target="_blank" rel="noopener noreferrer">
+      Telegram — @indmiart
+    </a>
+  </footer>
+
   <!-- Оверлей разблокировки звука -->
   <div class="overlay" id="gate">
     <div>
@@ -318,7 +338,7 @@
 
   const status = E('#status');
   const errBox = E('#error');
-  const gate   = E('#gate');
+  const gate = E('#gate');
   const btnUnlock = E('#unlock');
 
   const files = [
@@ -341,11 +361,10 @@
 
   const prelude = 'sounds/all.mp3';
 
-  const groupOf = i => (
+  const groupOf = i =>
     i <= 2 ? 'low' :
     i <= 5 ? 'mid' :
-    'high'
-  );
+    'high';
 
   const groups = ['low','mid','high'];
 
@@ -355,36 +374,25 @@
   const FADE_MS = 1200;
   const SAT_FADE_MS = 1200;
 
-
-  // =========================================================
-  // СОСТОЯНИЕ АУДИО
-  // =========================================================
-
   let ctx = null;
   let master = null;
 
-  // ВАЖНО:
-  // initializing защищает от повторного клика во время загрузки.
   let initializing = false;
   let initialized = false;
-
 
   let gains = [];
   let buffers = [];
   let loopNodes = [];
 
-
-  // состояние плиток
   let active = new Set();
   let lru = [];
+
   let groupQueues = {
     low:[],
     mid:[],
     high:[]
   };
 
-
-  // сателлиты
   let satBuffers = {};
   let satGains = {};
   let satNodes = {};
@@ -395,16 +403,10 @@
     high:0
   };
 
-
-  // вдох
   let preludeBuf = null;
   let preludePlaying = false;
   let preludeSoftLockUntil = 0;
 
-
-  // =========================================================
-  // STATUS / ERROR
-  // =========================================================
 
   function setStatus(text, cls='ready'){
     status.textContent = text;
@@ -415,113 +417,65 @@
   function showErr(msg){
     errBox.hidden = false;
     errBox.textContent = msg;
-
     setStatus('Ошибка','error');
-
     console.error(msg);
   }
 
 
   // =========================================================
-  // ИНИЦИАЛИЗАЦИЯ АУДИО
+  // ИНИЦИАЛИЗАЦИЯ
   // =========================================================
 
   btnUnlock.addEventListener('click', async ()=>{
 
-    // Если уже загружается или уже готово —
-    // ничего больше не делаем.
     if(initializing || initialized){
       return;
     }
 
     initializing = true;
 
-    // Сразу блокируем кнопку.
     btnUnlock.disabled = true;
     btnUnlock.textContent = 'Загрузка…';
 
     try{
 
-      setStatus('Запускаю звук…','loading');
-
-
-      // -------------------------------------------------------
-      // Создаём AudioContext
-      // -------------------------------------------------------
+      setStatus('Запускаю звук','loading');
 
       ctx = new (window.AudioContext || window.webkitAudioContext)({
         latencyHint:'interactive'
       });
 
-
-      // ВАЖНО:
-      // resume вызывается непосредственно внутри пользовательского
-      // click, чтобы браузер точно разрешил аудио.
       await ctx.resume();
 
-
-      // -------------------------------------------------------
-      // Master
-      // -------------------------------------------------------
-
       master = ctx.createGain();
-
       master.gain.value = 0.95;
-
       master.connect(ctx.destination);
-
-
-      // -------------------------------------------------------
-      // 9 основных GainNode
-      // -------------------------------------------------------
 
       for(let i=0; i<9; i++){
 
         const g = ctx.createGain();
 
         g.gain.value = 0.0;
-
         g.connect(master);
 
         gains[i] = g;
       }
-
-
-      // -------------------------------------------------------
-      // GainNode сателлитов
-      // -------------------------------------------------------
 
       for(const k of groups){
 
         const g = ctx.createGain();
 
         g.gain.value = 0.0;
-
         g.connect(master);
 
         satGains[k] = g;
       }
 
-
-      // -------------------------------------------------------
-      // Загружаем ВСЁ аудио
-      // -------------------------------------------------------
-
-      setStatus('Загружаю звук…','loading');
+      setStatus('Загружаю звук','loading');
 
       await loadAllAudio();
 
-
-      // -------------------------------------------------------
-      // Запускаем 9 фоновых лупов
-      // -------------------------------------------------------
-
       startAllLoops();
-
-
-      // -------------------------------------------------------
-      // Всё готово
-      // -------------------------------------------------------
 
       initialized = true;
       initializing = false;
@@ -531,14 +485,12 @@
         'ready'
       );
 
-
-      // Убираем экран блокировки.
       gate.remove();
 
-
-      // Периодическая проверка сателлитов.
-      setInterval(checkSatellites, 200);
-
+      setInterval(
+        checkSatellites,
+        200
+      );
 
     }catch(e){
 
@@ -553,7 +505,6 @@
         'Не удалось инициализировать звук: ' +
         e.message
       );
-
     }
 
   });
@@ -579,7 +530,6 @@
         ' ' +
         r.statusText
       );
-
     }
 
     return await r.arrayBuffer();
@@ -591,7 +541,6 @@
     return await ctx.decodeAudioData(
       await fetchBuf(url)
     );
-
   }
 
 
@@ -599,23 +548,17 @@
 
     try{
 
-      // 9 основных файлов
       buffers = await Promise.all(
         files.map(decode)
       );
 
-
-      // 3 сателлита
       for(const [k,url] of Object.entries(satellites)){
 
         satBuffers[k] = await decode(url);
 
       }
 
-
-      // all.mp3
       preludeBuf = await decode(prelude);
-
 
     }catch(e){
 
@@ -627,12 +570,11 @@
 
       throw e;
     }
-
   }
 
 
   // =========================================================
-  // ЗАПУСК ОСНОВНЫХ ЛУПОВ
+  // ОСНОВНЫЕ ЛУПЫ
   // =========================================================
 
   function startAllLoops(){
@@ -642,7 +584,6 @@
       const src = ctx.createBufferSource();
 
       src.buffer = buffers[i];
-
       src.loop = true;
 
       src.connect(gains[i]);
@@ -651,12 +592,11 @@
 
       loopNodes[i] = src;
     }
-
   }
 
 
   // =========================================================
-  // САТЕЛЛИТ
+  // САТЕЛЛИТЫ
   // =========================================================
 
   function ensureSatRunning(g){
@@ -665,11 +605,9 @@
       return;
     }
 
-
     const src = ctx.createBufferSource();
 
     src.buffer = satBuffers[g];
-
     src.loop = true;
 
     src.connect(satGains[g]);
@@ -684,11 +622,7 @@
   // FADE
   // =========================================================
 
-  function fadeTo(
-    param,
-    to,
-    ms=FADE_MS
-  ){
+  function fadeTo(param,to,ms=FADE_MS){
 
     const now = ctx.currentTime;
 
@@ -717,7 +651,6 @@
     );
 
     lru.push(idx);
-
 
     const g = groupOf(idx);
 
@@ -770,11 +703,9 @@
 
     active.delete(idx);
 
-    lru =
-      lru.filter(
-        i => i !== idx
-      );
-
+    lru = lru.filter(
+      i => i !== idx
+    );
 
     const g = groupOf(idx);
 
@@ -783,38 +714,33 @@
         i => i !== idx
       );
 
-
     fadeTo(
       gains[idx].gain,
       0.0,
       FADE_MS
     );
 
-
     E(
       `.pad[data-idx="${idx}"]`
     )?.classList.remove('active');
-
   }
 
-
-  // =========================================================
-  // ГРУППЫ
-  // =========================================================
 
   function activeInGroup(g){
 
     return [...active].filter(
       i => groupOf(i) === g
     );
-
   }
 
+
+  // =========================================================
+  // БАЛАНС
+  // =========================================================
 
   function balanceBeforeOn(idx){
 
     const gNew = groupOf(idx);
-
 
     const counts = {
       low:activeInGroup('low').length,
@@ -822,26 +748,20 @@
       high:activeInGroup('high').length
     };
 
-
     const total =
       counts.low +
       counts.mid +
       counts.high;
 
-
     if(total >= MAX_ACTIVE){
-
       popOldestGlobal();
-
     }
-
 
     const c = {
       low:activeInGroup('low').length,
       mid:activeInGroup('mid').length,
       high:activeInGroup('high').length
     };
-
 
     for(const g of groups){
 
@@ -851,12 +771,9 @@
       ){
 
         popOldestFromGroup(g);
-
         return;
       }
-
     }
-
 
     if(
       [c.low,c.mid,c.high]
@@ -873,12 +790,9 @@
       if(donor){
 
         popOldestFromGroup(donor);
-
         return;
       }
-
     }
-
 
     if(
       groups.every(
@@ -888,10 +802,8 @@
     ){
 
       popOldestFromGroup(gNew);
-
       return;
     }
-
   }
 
 
@@ -899,25 +811,21 @@
   // PAD
   // =========================================================
 
-  function togglePad(idx, el){
+  function togglePad(idx,el){
 
     if(
       !ctx ||
       ctx.state !== 'running'
     ){
-
       return;
     }
-
 
     if(
       preludePlaying &&
       Date.now() < preludeSoftLockUntil
     ){
-
       return;
     }
-
 
     if(active.has(idx)){
 
@@ -928,7 +836,6 @@
       balanceBeforeOn(idx);
 
       active.add(idx);
-
       pushLRU(idx);
 
       fadeTo(
@@ -939,7 +846,6 @@
 
       el.classList.add('active');
     }
-
 
     checkSatellites();
   }
@@ -955,10 +861,8 @@
       !ctx ||
       ctx.state !== 'running'
     ){
-
       return;
     }
-
 
     const arr =
       [...Array(9).keys()]
@@ -967,7 +871,6 @@
         )
         .slice(0,3);
 
-
     arr.forEach(i=>{
 
       const el =
@@ -975,11 +878,9 @@
           `.pad[data-idx="${i}"]`
         );
 
-
       balanceBeforeOn(i);
 
       active.add(i);
-
       pushLRU(i);
 
       fadeTo(
@@ -989,9 +890,7 @@
       );
 
       el?.classList.add('active');
-
     });
-
 
     checkSatellites();
   }
@@ -1007,17 +906,13 @@
       !ctx ||
       ctx.state !== 'running'
     ){
-
       return;
     }
-
 
     [...active].forEach(
       deactivate
     );
 
-
-    // гасим сателлиты
     for(const g of groups){
 
       fadeTo(
@@ -1028,12 +923,11 @@
 
       satLast3At[g] = 0;
     }
-
   }
 
 
   // =========================================================
-  // САТЕЛЛИТЫ
+  // ПРОВЕРКА САТЕЛЛИТОВ
   // =========================================================
 
   function checkSatellites(){
@@ -1042,20 +936,16 @@
       !ctx ||
       ctx.state !== 'running'
     ){
-
       return;
     }
 
-
     const now =
       performance.now();
-
 
     for(const g of groups){
 
       const n =
         activeInGroup(g).length;
-
 
       if(n >= 3){
 
@@ -1065,7 +955,6 @@
 
           satLast3At[g] = now;
         }
-
 
         if(
           now - satLast3At[g] >=
@@ -1079,7 +968,6 @@
             0.8,
             SAT_FADE_MS
           );
-
         }
 
       }else{
@@ -1091,11 +979,8 @@
           0.0,
           SAT_FADE_MS
         );
-
       }
-
     }
-
   }
 
 
@@ -1109,88 +994,69 @@
       !ctx ||
       ctx.state !== 'running'
     ){
-
       return;
     }
-
 
     if(preludePlaying){
       return;
     }
-
 
     preludePlaying = true;
 
     preludeSoftLockUntil =
       Date.now() + 10000;
 
-
     setStatus(
       'Вдох…',
       'busy'
     );
 
-
     resetAll();
-
 
     await new Promise(
       r => setTimeout(r,300)
     );
 
-
     const src =
       ctx.createBufferSource();
 
-
     src.buffer = preludeBuf;
-
 
     const g =
       ctx.createGain();
 
-
     g.gain.value = 0.0;
 
-
     src.connect(g);
-
     g.connect(master);
 
     src.start(0);
 
-
     const t0 =
       ctx.currentTime;
-
 
     g.gain.setValueAtTime(
       0,
       t0
     );
 
-
     g.gain.linearRampToValueAtTime(
       1.0,
       t0 + 0.08
     );
 
-
     const tEnd =
       t0 + preludeBuf.duration;
-
 
     g.gain.setValueAtTime(
       1.0,
       tEnd - 0.2
     );
 
-
     g.gain.linearRampToValueAtTime(
       0.0,
       tEnd
     );
-
 
     src.onended = ()=>{
 
@@ -1200,9 +1066,7 @@
         'Готово',
         'ready'
       );
-
     };
-
   }
 
 
@@ -1243,10 +1107,6 @@
       inhale
     );
 
-
-  // =========================================================
-  // НАЧАЛЬНЫЙ СТАТУС
-  // =========================================================
 
   setStatus(
     'Ожидание…',
