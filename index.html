@@ -1003,13 +1003,22 @@
 
     preludePlaying = true;
 
+    const INHALE_LOCK_MS = 7000;
+
     preludeSoftLockUntil =
-      Date.now() + 5000;
+      Date.now() + INHALE_LOCK_MS;
 
     setStatus(
       'Вдох…',
       'busy'
     );
+
+    setTimeout(()=>{
+      setStatus(
+        'Готово',
+        'ready'
+      );
+    }, INHALE_LOCK_MS);
 
     resetAll();
 
@@ -1061,11 +1070,6 @@
     src.onended = ()=>{
 
       preludePlaying = false;
-
-      setStatus(
-        'Готово',
-        'ready'
-      );
     };
   }
 
